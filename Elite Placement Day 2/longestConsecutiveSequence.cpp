@@ -13,21 +13,26 @@ int main()
         cin>>temp;
         arr.push_back(temp);
     }
-    map<int, int> mpp;
+    unordered_set<int> st;
     for(int i = 0; i < arr.size(); i++)
     {
-        mpp[arr[i]]++;
+        st.insert(arr[i]);
     }
-    int ans = -1, count = -1;
-    for(auto it:mpp)
+    int count = 0,longest = 1;
+    for(auto it : st)
     {
-        if(it.second > 1)
+        if(st.find(it-1) == st.end())
         {
-            ans = it.first;
-            count = it.second;
+            count = 1;
+            int x = it;
+            while(st.find(x+1) != st.end())
+            {
+                x += 1;
+                count++;
+            }
         }
+        longest = max(longest,count);
     }
-    cout<<"Dupicate element :"<<ans<<endl;
-    cout<<"Count of Duplicate elements :"<<count;
+    cout<<longest;
     return 0;
 }
